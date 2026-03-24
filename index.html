@@ -16,6 +16,17 @@
       --font-main: 'TsukuARdGothic', '筑紫A丸ゴシック', 'Hiragino Maru Gothic Pro', 'YuGothic', 'Yu Gothic', 'Noto Sans JP', 'DM Sans', sans-serif;
     }
 
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --color-bg: #111111;
+        --color-bg-sub: #1C1C1C;
+        --color-border: #2E2E2E;
+        --color-text: #EBEBEB;
+        --color-text-sub: #888888;
+        --color-accent: #EBEBEB;
+      }
+    }
+
     *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
@@ -48,10 +59,16 @@
     }
 
     nav.scrolled {
-      background: rgba(255,255,255,0.85);
+      background: rgba(255, 255, 255, 0.85);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-bottom-color: var(--color-border);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      nav.scrolled {
+        background: rgba(17, 17, 17, 0.85);
+      }
     }
 
     .nav-logo {
@@ -223,14 +240,8 @@
       scrollbar-color: var(--color-border) transparent;
     }
 
-    .career-scroll-box::-webkit-scrollbar {
-      width: 4px;
-    }
-
-    .career-scroll-box::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
+    .career-scroll-box::-webkit-scrollbar { width: 4px; }
+    .career-scroll-box::-webkit-scrollbar-track { background: transparent; }
     .career-scroll-box::-webkit-scrollbar-thumb {
       background: var(--color-border);
       border-radius: 2px;
@@ -266,7 +277,7 @@
       line-height: 1.6;
     }
 
-    /* Contact */
+    /* Contact section */
     .contact-section {
       background: var(--color-bg-sub);
       padding: 100px 24px;
@@ -278,12 +289,15 @@
       margin: 0 auto;
     }
 
-    .contact-heading {
+    /* Socials & Mail sub-labels — same as Languages/Tools */
+    .contact-sub-label {
       font-family: var(--font-main);
       font-weight: 400;
-      font-size: 40px;
-      color: var(--color-text);
-      margin-bottom: 32px;
+      font-size: 14px;
+      color: #9B9B9B;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
     }
 
     .contact-links {
@@ -301,7 +315,8 @@
       line-height: 0;
     }
 
-    .social-icon-link:hover {
+    .social-icon-link:hover,
+    .social-icon-static:hover {
       opacity: 0.7;
       transform: translateY(-3px);
     }
@@ -312,13 +327,15 @@
       transition: opacity 0.2s, transform 0.2s;
     }
 
-    .social-icon-static:hover {
-      opacity: 0.7;
-      transform: translateY(-3px);
+    /* Dark mode icon inversion (X, note, GitHub — not LinkedIn) */
+    @media (prefers-color-scheme: dark) {
+      .icon-invert {
+        filter: invert(1);
+      }
     }
 
-    /* Mail */
-    .mail-block { margin-top: 72px; }
+    /* Mail block */
+    .mail-block { margin-top: 64px; }
 
     .contact-subtext {
       font-family: var(--font-main);
@@ -395,12 +412,16 @@
       <div class="section-inner">
         <div class="section-label fade-in">About</div>
         <p class="about-text fade-in">
-          木更津高専で電気電子工学を5年間学び、在学中はTeamLabやFANUCでのインターン、<br>
-          福島第一原発の復興支援事業への参画、太陽電池型中性子線量計の研究開発など、<br>
+          木更津高専で電気電子工学を5年間学び、<br>
+          在学中はTeamLabやFANUCでのインターン、<br>
+          福島第一原発の復興支援事業への参画、<br>
+          太陽電池型中性子線量計の研究開発など、<br>
           現場に踏み込んだ経験を重ねてきた。<br>
           2025年に東京電機大学・未来科学部へ編入。<br>
-          現在はAIコミュニティの立ち上げ・運営やAIコンサルスタートアップでのインターン、LinkedInの学生団体統括の活動を通じてエンジニアリングとビジネスの両軸で成長中。<br>
-          学生起業を、次の目標として見据えている。
+          現在はAIコミュニティの立ち上げ・運営やAIコンサルスタートアップでのインターン、<br>
+          LinkedInの学生団体統括の活動を通じてエンジニアリングとビジネスの両軸で成長中。<br>
+          学生起業を、<br>
+          次の目標として見据えている。
         </p>
       </div>
     </section>
@@ -505,11 +526,14 @@
 
     <section class="contact-section" id="contact">
       <div class="contact-inner">
-        <h2 class="contact-heading fade-in">Socials</h2>
+
+        <div class="section-label fade-in">Contact</div>
+
+        <div class="contact-sub-label fade-in">Socials</div>
         <div class="contact-links fade-in">
 
           <!-- X (Twitter) — no link -->
-          <span class="social-icon-static" title="X (Twitter)">
+          <span class="social-icon-static icon-invert" title="X (Twitter)">
             <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect width="48" height="48" rx="10" fill="#000"/>
               <path d="M26.62 22.56 34.2 14h-1.8L25.8 21.4 20.16 14H13l7.96 11.06L13 34h1.8l6.96-7.88 5.56 7.88H34L26.62 22.56Zm-2.47 2.8-.8-1.1-6.4-8.76h2.76l5.16 7.08.8 1.1 6.7 9.18h-2.76l-5.46-7.5Z" fill="white"/>
@@ -527,7 +551,7 @@
           </a>
 
           <!-- note -->
-          <a class="social-icon-link" href="https://note.com/soma_wyd" target="_blank" rel="noopener" title="note">
+          <a class="social-icon-link icon-invert" href="https://note.com/soma_wyd" target="_blank" rel="noopener" title="note">
             <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect width="48" height="48" rx="10" fill="#fff"/>
               <text x="4" y="32" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="20" fill="#000" letter-spacing="-0.5">no+e</text>
@@ -535,7 +559,7 @@
           </a>
 
           <!-- GitHub -->
-          <a class="social-icon-link" href="https://github.com/somaWyd" target="_blank" rel="noopener" title="GitHub">
+          <a class="social-icon-link icon-invert" href="https://github.com/somaWyd" target="_blank" rel="noopener" title="GitHub">
             <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd" clip-rule="evenodd" d="M24 4C12.95 4 4 12.95 4 24c0 8.84 5.73 16.34 13.68 18.98.99.18 1.36-.43 1.36-.96v-3.35c-5.56 1.21-6.73-2.69-6.73-2.69-.91-2.31-2.22-2.92-2.22-2.92-1.81-1.24.14-1.21.14-1.21 2.01.14 3.07 2.06 3.07 2.06 1.78 3.05 4.68 2.17 5.82 1.66.18-1.29.7-2.17 1.27-2.67-4.43-.5-9.09-2.22-9.09-9.87 0-2.18.78-3.96 2.06-5.35-.21-.51-.89-2.53.19-5.27 0 0 1.68-.54 5.5 2.05a19.14 19.14 0 0 1 5-.67c1.7 0 3.41.23 5 .67 3.82-2.59 5.49-2.05 5.49-2.05 1.09 2.74.4 4.76.2 5.27 1.28 1.39 2.05 3.17 2.05 5.35 0 7.67-4.67 9.36-9.12 9.85.72.62 1.36 1.83 1.36 3.69v5.47c0 .53.36 1.15 1.37.96C38.28 40.33 44 32.83 44 24 44 12.95 35.05 4 24 4Z" fill="#000"/>
             </svg>
@@ -544,10 +568,11 @@
         </div>
 
         <div class="mail-block fade-in">
-          <h2 class="contact-heading">Mail</h2>
-          <p class="contact-subtext">ご依頼・ご相談お待ちしております。</p>
+          <div class="contact-sub-label">Mail</div>
+          <p class="contact-subtext">ご連絡・ご相談お待ちしております。</p>
           <p class="mail-address">Mail: <a href="mailto:somayoshida.biz@gmail.com">somayoshida.biz@gmail.com</a></p>
         </div>
+
       </div>
     </section>
 
