@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soma Life Lab.</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-bg: #FFFFFF;
+      --color-bg-sub: #F8F8F7;
+      --color-border: #E8E8E4;
+      --color-text: #1A1A1A;
+      --color-text-sub: #6B6B6B;
+      --color-accent: #1A1A1A;
+      --font-main: 'TsukuARdGothic', '筑紫A丸ゴシック', 'Hiragino Maru Gothic Pro', 'YuGothic', 'Yu Gothic', 'Noto Sans JP', 'DM Sans', sans-serif;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--color-bg);
+      color: var(--color-text);
+      font-family: var(--font-main);
+      font-weight: 300;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Nav */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      height: 64px;
+      transition: background 0.3s, border-color 0.3s, backdrop-filter 0.3s;
+      border-bottom: 1px solid transparent;
+    }
+
+    nav.scrolled {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom-color: var(--color-border);
+    }
+
+    .nav-logo {
+      font-family: var(--font-main);
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--color-text);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--font-main);
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--color-text-sub);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--color-text);
+    }
+
+    /* Fade-in animation */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0 24px;
+    }
+
+    .hero-site-name {
+      font-family: var(--font-main);
+      font-weight: 300;
+      font-size: 64px;
+      color: #9B9B9B;
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+
+    .hero-divider {
+      width: 320px;
+      height: 1px;
+      background: var(--color-border);
+      margin: 0 auto 28px;
+    }
+
+    .hero-title {
+      font-family: var(--font-main);
+      font-weight: 400;
+      font-size: 48px;
+      color: var(--color-text);
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+
+    .hero-subtitle {
+      font-family: var(--font-main);
+      font-weight: 300;
+      font-size: 16px;
+      color: var(--color-text-sub);
+      line-height: 1.8;
+      margin-bottom: 40px;
+    }
+
+    .hero-cta {
+      font-family: var(--font-main);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-text);
+      text-decoration: none;
+      letter-spacing: 0.03em;
+      transition: opacity 0.2s, transform 0.2s;
+      display: inline-block;
+    }
+
+    .hero-cta:hover {
+      opacity: 0.6;
+      transform: translateY(-2px);
+    }
+
+    /* Sections common */
+    .section {
+      padding: 100px 24px;
+      text-align: center;
+    }
+
+    .section-inner {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: var(--font-main);
+      font-weight: 400;
+      font-size: 40px;
+      letter-spacing: 0.02em;
+      color: var(--color-text);
+      margin-bottom: 32px;
+    }
+
+    /* About */
+    .about-text {
+      font-family: var(--font-main);
+      font-weight: 300;
+      font-size: 15px;
+      line-height: 1.9;
+      color: var(--color-text);
+      text-align: center;
+    }
+
+    /* Skills */
+    .skills-content {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .skill-group {
+      width: 100%;
+      text-align: center;
+    }
+
+    .skill-group-label {
+      font-family: var(--font-main);
+      font-weight: 400;
+      font-size: 40px;
+      color: var(--color-text);
+      letter-spacing: 0.02em;
+      margin-bottom: 10px;
+    }
+
+    .skill-tag {
+      padding: 6px 14px;
+      font-size: 13px;
+      font-family: var(--font-main);
+      background: var(--color-bg-sub);
+      border: 1px solid var(--color-border);
+      border-radius: 2px;
+      color: var(--color-text);
+      display: inline-block;
+      margin: 4px 4px 4px 0;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .skill-tag:hover {
+      opacity: 0.7;
+      transform: translateY(-2px);
+    }
+
+    /* Career */
+    .career-timeline {
+      display: inline-block;
+      text-align: left;
+      border-left: 1px solid var(--color-border);
+      padding-left: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .timeline-item {
+      padding-left: 8px;
+    }
+
+    .timeline-date {
+      font-family: var(--font-main);
+      font-weight: 500;
+      font-size: 12px;
+      color: var(--color-text-sub);
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+
+    .timeline-content {
+      font-family: var(--font-main);
+      font-weight: 300;
+      font-size: 14px;
+      color: var(--color-text);
+      line-height: 1.6;
+    }
+
+    /* Contact */
+    .contact-section {
+      background: var(--color-bg-sub);
+      padding: 100px 24px;
+      text-align: center;
+    }
+
+    .contact-inner {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .contact-heading {
+      font-family: var(--font-main);
+      font-weight: 400;
+      font-size: 40px;
+      color: var(--color-text);
+      margin-bottom: 32px;
+    }
+
+    .contact-subtext {
+      font-family: var(--font-main);
+      font-weight: 300;
+      font-size: 15px;
+      color: var(--color-text-sub);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 32px 40px;
+    }
+
+    .contact-link-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .contact-link-item a {
+      font-family: var(--font-main);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-text);
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      border-bottom: 1px solid var(--color-text);
+      padding-bottom: 2px;
+      transition: opacity 0.2s;
+    }
+
+    .contact-link-item a:hover {
+      opacity: 0.5;
+    }
+
+    .contact-link-url {
+      font-family: var(--font-main);
+      font-size: 11px;
+      font-weight: 300;
+      color: var(--color-text-sub);
+      letter-spacing: 0.02em;
+    }
+
+    .mail-block {
+      margin-top: 72px;
+    }
+
+    .mail-address {
+      font-family: var(--font-main);
+      font-weight: 300;
+      font-size: 15px;
+      color: var(--color-text-sub);
+    }
+
+    .mail-address a {
+      color: var(--color-text);
+      text-decoration: none;
+      border-bottom: 1px solid var(--color-text);
+      padding-bottom: 2px;
+      transition: opacity 0.2s;
+    }
+
+    .mail-address a:hover {
+      opacity: 0.5;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 40px 0;
+      font-family: var(--font-main);
+      font-weight: 300;
+      font-size: 12px;
+      color: #9B9B9B;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      nav {
+        padding: 0 24px;
+      }
+
+      .nav-links {
+        gap: 16px;
+      }
+
+      .nav-links a {
+        font-size: 13px;
+      }
+
+      .hero-site-name {
+        font-size: 36px;
+      }
+
+      .hero-title {
+        font-size: 32px;
+      }
+
+      .hero-divider {
+        width: 200px;
+      }
+
+      .contact-links {
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="navbar">
+    <a href="#" class="nav-logo">Soma Life Lab.</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#career">Career</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main>
+
+    <section class="hero">
+      <div class="hero-site-name fade-in" style="transition-delay: 0s;">Soma Life Lab.</div>
+      <div class="hero-divider fade-in" style="transition-delay: 0.15s;"></div>
+      <h1 class="hero-title fade-in" style="transition-delay: 0.3s;">Engineer &amp; Entrepreneur</h1>
+      <p class="hero-subtitle fade-in" style="transition-delay: 0.45s;">
+        高専で電気電子工学を学び、東京電機大学へ情報技術を学ぶため編入。<br>
+        AIとビジネス経験を活かして学生起業を目指します。
+      </p>
+      <a href="#career" class="hero-cta fade-in" style="transition-delay: 0.6s;">Career を見る ↓</a>
+    </section>
+
+    <section class="section" id="about">
+      <div class="section-inner">
+        <div class="section-label fade-in">About</div>
+        <p class="about-text fade-in">
+          木更津高専で電気電子工学を5年間学び、在学中はTeamLabやFANUCでのインターン、福島第一原発の復興支援事業への参画、太陽電池型中性子線量計の研究開発など、現場に踏み込んだ経験を重ねてきた。2025年に東京電機大学・未来科学部へ編入。現在はAIコミュニティの立ち上げ・運営やAIコンサルスタートアップでのインターン、LinkedInの学生団体統括の活動を通じてエンジニアリングとビジネスの両軸で成長中。学生起業を、次の目標として見据えている。
+        </p>
+      </div>
+    </section>
+
+    <section class="section" id="skills">
+      <div class="section-inner">
+        <div class="section-label fade-in">Skills</div>
+        <div class="skills-content fade-in">
+          <div class="skill-group">
+            <div class="skill-group-label">Languages</div>
+            <div>
+              <span class="skill-tag">C</span>
+              <span class="skill-tag">Java</span>
+              <span class="skill-tag">Python</span>
+              <span class="skill-tag">Swift</span>
+              <span class="skill-tag">JavaScript</span>
+            </div>
+          </div>
+          <div class="skill-group">
+            <div class="skill-group-label">Tools</div>
+            <div>
+              <span class="skill-tag">Notion</span>
+              <span class="skill-tag">Figma</span>
+              <span class="skill-tag">GitHub</span>
+              <span class="skill-tag">Cursor</span>
+              <span class="skill-tag">VSCode</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="career">
+      <div class="section-inner">
+        <div class="section-label fade-in">Career</div>
+        <div class="career-timeline fade-in">
+          <div class="timeline-item">
+            <div class="timeline-date">2020.04</div>
+            <div class="timeline-content">木更津工業高等専門学校<br>電気電子工学科 入学</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">2023.08</div>
+            <div class="timeline-content">TeamLab<br>インターンシップ</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">2023.09</div>
+            <div class="timeline-content">FANUC<br>インターンシップ</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">2023.09</div>
+            <div class="timeline-content">福島第一原発復興支援事業<br>参画</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">2023.10</div>
+            <div class="timeline-content">電子材料実験室<br>太陽電池型中性子線量計 研究開発</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">2025.03</div>
+            <div class="timeline-content">木更津工業高等専門学校<br>電気電子工学科 卒業（準学士）</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">2025.04</div>
+            <div class="timeline-content">東京電機大学・未来科学部<br>編入学</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">2025.05</div>
+            <div class="timeline-content">Notion Student Japan<br>LT登壇</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">2025.05</div>
+            <div class="timeline-content">AIコミュニティ<br>設立・代表就任</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">2025.06</div>
+            <div class="timeline-content">LinkedIn Student Club 4期生<br>加入</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">2025.07</div>
+            <div class="timeline-content">AIコンサルスタートアップ<br>インターンシップ</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">2025.08</div>
+            <div class="timeline-content">LinkedIn Student Club 4期生<br>PMO就任</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">2025.09</div>
+            <div class="timeline-content">東京AI祭ハッカソン<br>出場</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">2025.10</div>
+            <div class="timeline-content">LinkedIn Student Career Week 2025 Autumn<br>開催・5,500人集客達成</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">2025.11</div>
+            <div class="timeline-content">AIコミュニティ<br>メンバー50人達成</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact-section" id="contact">
+      <div class="contact-inner">
+        <h2 class="contact-heading fade-in">Socials</h2>
+        <div class="contact-links fade-in">
+          <div class="contact-link-item">
+            <a href="https://x.com/soma_wyd" target="_blank" rel="noopener">X (Twitter)</a>
+            <span class="contact-link-url">x.com/soma_wyd</span>
+          </div>
+          <div class="contact-link-item">
+            <a href="https://www.linkedin.com/in/somayoshida/" target="_blank" rel="noopener">LinkedIn</a>
+            <span class="contact-link-url">linkedin.com/in/somayoshida</span>
+          </div>
+          <div class="contact-link-item">
+            <a href="https://note.com/soma_wyd" target="_blank" rel="noopener">note</a>
+            <span class="contact-link-url">note.com/soma_wyd</span>
+          </div>
+          <div class="contact-link-item">
+            <a href="https://github.com/somaWyd" target="_blank" rel="noopener">GitHub</a>
+            <span class="contact-link-url">github.com/somaWyd</span>
+          </div>
+        </div>
+
+        <div class="mail-block fade-in">
+          <h2 class="contact-heading">Mail</h2>
+          <p class="contact-subtext">ご依頼・ご相談お待ちしております。</p>
+          <p class="mail-address">Mail: <a href="mailto:somayoshida.biz@gmail.com">somayoshida.biz@gmail.com</a></p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>© 2025 Soma. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 10) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    const fadeEls = document.querySelectorAll('.fade-in');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    fadeEls.forEach(el => {
+      observer.observe(el);
+    });
+
+    window.addEventListener('load', () => {
+      const heroEls = document.querySelectorAll('.hero .fade-in');
+      heroEls.forEach(el => {
+        el.classList.add('visible');
+      });
+    });
+  </script>
+
+</body>
+</html>
