@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+:root {
+  --color-primary: #E84040;
+  --color-accent: #FF7043;
+  --color-tint: #FEF0EE;
+  --color-border-light: #F5C4B3;
+  --color-text: #1A1A1A;
+  --color-text-muted: #6B6B6B;
+  --color-surface: #F7F7F5;
+  --color-white: #FFFFFF;
+}
+
+@theme inline {
+  --color-map-red: #E84040;
+  --color-map-orange: #FF7043;
+  --color-map-tint: #FEF0EE;
+  --color-map-surface: #F7F7F5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: var(--color-text);
+  font-family: var(--font-noto-sans-jp), 'Noto Sans JP', sans-serif;
+  background: var(--color-white);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #E84040, #FF7043);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-bg {
+  background: linear-gradient(135deg, #E84040, #FF7043);
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+
+.accordion-content.open {
+  max-height: 600px;
+}
