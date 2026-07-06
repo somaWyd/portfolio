@@ -1,0 +1,30 @@
+# このリポジトリ (somaWyd/portfolio, Public) はポートフォリオ公開用。
+# /Users/soma/projects は他の私的/実験プロジェクトも同居するフォルダなので、
+# `git add -A` 等でうっかり無関係なプロジェクトを巻き込まないよう明示的に除外する。
+# 2026-05-08 の誤コミット(01a20975)で一度全部が混入した反省を踏まえた恒久対策。
+
+# --- 一般的な無視対象 ---
+.DS_Store
+node_modules/
+*.log
+.env
+.env.*
+!.env.example
+
+# --- このリポジトリと無関係な同居プロジェクト（意図的に非公開） ---
+/.claude/
+/claude-code/
+/discord-bot/
+/myPortfolio/
+/plugin/
+/projects_iOS/
+/study/
+/team-library/
+/university-monitor/
+/AI-community/
+/MaP-homepage/
+/pushup-coach/
+/soma-portfolio-v2/
+/vision-board/
+
+# nextjs-dashboard は独自の .git を持つため素通り（gitlinkとしてのみ記録される想定）

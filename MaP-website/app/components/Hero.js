@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Hero() {
   const containerRef = useRef(null);
@@ -15,10 +16,6 @@ export default function Hero() {
       setTimeout(() => el.classList.add("visible"), 50);
     });
   }, []);
-
-  const scrollToSection = (id) => {
-    document.querySelector(id)?.scrollIntoView({ behavior: "smooth" });
-  };
 
   return (
     <section
@@ -87,21 +84,19 @@ export default function Hero() {
 
         {/* CTA Buttons */}
         <div className="hero-animate fade-in flex flex-col sm:flex-row gap-4">
-          <button
-            onClick={() => scrollToSection("#about")}
-            className="px-8 py-3.5 rounded-full text-white font-semibold text-sm shadow-md hover:scale-[1.03] transition-transform duration-200"
-            style={{
-              background: "linear-gradient(135deg, #E84040, #FF7043)",
-            }}
+          <Link
+            href="/project"
+            className="px-8 py-3.5 rounded-full text-white font-semibold text-sm shadow-md hover:scale-[1.03] transition-transform duration-200 text-center"
+            style={{ background: "linear-gradient(135deg, #E84040, #FF7043)" }}
           >
             活動を知る
-          </button>
-          <button
-            onClick={() => scrollToSection("#cocreation")}
-            className="px-8 py-3.5 rounded-full font-semibold text-sm border-2 border-[#E84040] text-[#E84040] hover:bg-[#FEF0EE] transition-colors duration-200"
+          </Link>
+          <Link
+            href="/contact"
+            className="px-8 py-3.5 rounded-full font-semibold text-sm border-2 border-[#E84040] text-[#E84040] hover:bg-[#FEF0EE] transition-colors duration-200 text-center"
           >
             共創しませんか
-          </button>
+          </Link>
         </div>
 
         {/* Badge */}
@@ -111,7 +106,7 @@ export default function Hero() {
             style={{ backgroundColor: "#FEF0EE" }}
           >
             <span className="w-2 h-2 rounded-full bg-[#E84040] animate-pulse" />
-            16社以上が参画
+            Co-Lab-Gears参画16社以上と連携
           </span>
         </div>
       </div>
